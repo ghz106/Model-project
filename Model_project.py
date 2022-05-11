@@ -40,7 +40,7 @@ def bisect2(a, b, alpha=(1/3), phi=(1/3), g=0.015, sk=0.2, sh=0.15, n=0, delta=0
     g = g
     phi = phi
     delta = delta
-    return optimize.bisect(h_ss_func, a, b)
+    return optimize.bisect(h_ss_func, a, b, full_output=True)
 
 #And the second one
 def bisect3(a, b, alpha=(1/3), phi=(1/3), g=0.015, sk=0.2, sh=0.15, n=0, delta=0.06, A=1):
@@ -75,7 +75,7 @@ def bisect3(a, b, alpha=(1/3), phi=(1/3), g=0.015, sk=0.2, sh=0.15, n=0, delta=0
     phi = phi
     delta = delta
     A = A
-    return optimize.bisect(y_ss_func, a, b)
+    return optimize.bisect(y_ss_func, a, b, full_output=True)
 
 #Extended model
 
@@ -121,7 +121,7 @@ def bisect4(a, b, alpha=(1/3), phi=(1/3), g=0.015, sk=0.2, tau=0.15, n=0, delta=
     phi = phi
     delta = delta
     n = n
-    return optimize.bisect(k_ex_ss_func, a, b)
+    return optimize.bisect(k_ex_ss_func, a, b, full_output=True)
 
 #for h(tilde)
 def bisect5(a, b, alpha=(1/3), phi=(1/3), g=0.015, sk=0.2, tau=0.15, n=0, delta=0.06):
@@ -155,7 +155,7 @@ def bisect5(a, b, alpha=(1/3), phi=(1/3), g=0.015, sk=0.2, tau=0.15, n=0, delta=
     phi = phi
     delta = delta
     n = n
-    return optimize.bisect(h_ex_ss_func, a, b)
+    return optimize.bisect(h_ex_ss_func, a, b, full_output=True)
 
 #And lastly for y
 def bisect6(a, b, alpha=(1/3), phi=(1/3), g=0.015, sk=0.2, tau=0.15, n=0, delta=0.06, A=1):
@@ -191,4 +191,4 @@ def bisect6(a, b, alpha=(1/3), phi=(1/3), g=0.015, sk=0.2, tau=0.15, n=0, delta=
     delta = delta
     n = n
     A = A
-    return optimize.bisect(y_ex_ss_func, a, b)
+    return optimize.bisect(y_ex_ss_func, a, b, full_output=True)
