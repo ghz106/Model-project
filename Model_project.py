@@ -13,16 +13,18 @@ y_ss_func = lambda y, alpha=(1/3), phi=(1/3), g=0.015, sk=0.2, sh=0.15, n=0, del
 def bisect2(a, b, alpha=(1/3), phi=(1/3), g=0.015, sk=0.2, sh=0.15, n=0, delta=0.06):
     """ bisection
     
+    Solve equation f(x) = 0 for a <= x <= b.
+    
     Args:
     
-        a      (float)          : one end of the bracketing interval [a,b]
-        b      (float)          : the other end of the bracketing interval [a,b]
+        a      (integer)        : one end of the bracketing interval [a,b]
+        b      (integer)        : the other end of the bracketing interval [a,b]
         alpha  (float)          : income share of capital and labour
         phi    (float)          : income share of human capital and labour
         g      (float)          : growth rate of technology
         sk     (float)          : savings rate of physical capital
         sh     (float)          : savings rate of human capital
-        n      (float)          : growth rate of labour
+        n      (integer)        : growth rate of labour
         delta  (float)          : depreciation rate on human- and physcial capital
     
     Returns:
@@ -44,18 +46,20 @@ def bisect2(a, b, alpha=(1/3), phi=(1/3), g=0.015, sk=0.2, sh=0.15, n=0, delta=0
 def bisect3(a, b, alpha=(1/3), phi=(1/3), g=0.015, sk=0.2, sh=0.15, n=0, delta=0.06, A=1):
     """ bisection
     
+    Solve equation f(x) = 0 for a <= x <= b.
+    
     Args:
     
-        a      (float)          : one end of the bracketing interval [a,b]
-        b      (float)          : the other end of the bracketing interval [a,b]
+        a      (integer)        : one end of the bracketing interval [a,b]
+        b      (integer)        : the other end of the bracketing interval [a,b]
         alpha  (float)          : income share of capital and labour
         phi    (float)          : income share of human capital and labour
         g      (float)          : growth rate of technology
         sk     (float)          : savings rate of physical capital
         sh     (float)          : savings rate of human capital
-        n      (float)          : growth rate of labour
+        n      (integer)        : growth rate of labour
         delta  (float)          : depreciation rate on human- and physcial capital
-        A      (float)          : technology
+        A      (integer)        : technology
     
     Returns:
     
@@ -73,5 +77,118 @@ def bisect3(a, b, alpha=(1/3), phi=(1/3), g=0.015, sk=0.2, sh=0.15, n=0, delta=0
     A = A
     return optimize.bisect(y_ss_func, a, b)
 
+#Extended model
 
+#Optimizer functions for all of the 3 steady state values for the extended model
 
+#a. First the objective functions
+k_ex_ss_func = lambda k, alpha=(1/3), phi=(1/3), g=0.015, sk=0.2, tau=0.15, n=0, delta=0.06: k-(((sk/(n+g+delta+tau+n*g))*((tau**phi)/((n+g+delta+n*g)**phi)))**(1/(1-alpha-phi)))
+
+h_ex_ss_func = lambda h, alpha=(1/3), phi=(1/3), g=0.015, sk=0.2, tau=0.15, n=0, delta=0.06: h-(((sk/(n+g+delta+n*g+tau))*((tau**(1-alpha))/((n+g+delta+n*g+tau)**(1-alpha))))**(1/(1-alpha-phi))) 
+
+y_ex_ss_func = lambda y, alpha=(1/3), phi=(1/3), g=0.015, sk=0.2, tau=0.15, n=0, delta=0.06, A=1: y-(A*(((tau/(n+g+delta+n*g))**(phi/(1-alpha-phi)))*((sk/(n+g+delta+n*g+tau))**((alpha+phi)/(1-alpha-phi)))))
+
+#b. The obtimizer functions
+# for k(tilde)
+def bisect4(a, b, alpha=(1/3), phi=(1/3), g=0.015, sk=0.2, tau=0.15, n=0, delta=0.06):
+    """ bisection
+    
+    Solve equation f(x) = 0 for a <= x <= b.
+    
+    Args:
+    
+        a      (integer)        : one end of the bracketing interval [a,b]
+        b      (integer)        : the other end of the bracketing interval [a,b]
+        alpha  (float)          : income share of capital and labour
+        phi    (float)          : income share of human capital and labour
+        g      (float)          : growth rate of technology
+        sk     (float)          : savings rate of physical capital
+        tau    (float)          : tax rate on wealth
+        n      (integer)        : growth rate of labour
+        delta  (float)          : depreciation rate on human- and physcial capital
+    
+    Returns:
+    
+        steady state value for k(tilde)^*
+        
+    """
+        
+    alpha = alpha
+    phi = phi
+    g = g
+    sk = sk
+    tau = tau
+    phi = phi
+    delta = delta
+    n = n
+    return optimize.bisect(k_ex_ss_func, a, b)
+
+#for h(tilde)
+def bisect5(a, b, alpha=(1/3), phi=(1/3), g=0.015, sk=0.2, tau=0.15, n=0, delta=0.06):
+    """ bisection
+    
+    Solve equation f(x) = 0 for a <= x <= b.
+    
+    Args:
+    
+        a      (integer)        : one end of the bracketing interval [a,b]
+        b      (integer)        : the other end of the bracketing interval [a,b]
+        alpha  (float)          : income share of capital and labour
+        phi    (float)          : income share of human capital and labour
+        g      (float)          : growth rate of technology
+        sk     (float)          : savings rate of physical capital
+        tau    (float)          : tax rate on wealth
+        n      (integer)        : growth rate of labour
+        delta  (float)          : depreciation rate on human- and physcial capital
+    
+    Returns:
+    
+        steady state value for h(tilde)^*
+        
+    """
+        
+    alpha = alpha
+    phi = phi
+    g = g
+    sk = sk
+    tau = tau
+    phi = phi
+    delta = delta
+    n = n
+    return optimize.bisect(h_ex_ss_func, a, b)
+
+#And lastly for y
+def bisect6(a, b, alpha=(1/3), phi=(1/3), g=0.015, sk=0.2, tau=0.15, n=0, delta=0.06, A=1):
+    """ bisection
+    
+    Solve equation f(x) = 0 for a <= x <= b.
+    
+    Args:
+    
+        a      (integer)        : one end of the bracketing interval [a,b]
+        b      (integer)        : the other end of the bracketing interval [a,b]
+        alpha  (float)          : income share of capital and labour
+        phi    (float)          : income share of human capital and labour
+        g      (float)          : growth rate of technology
+        sk     (float)          : savings rate of physical capital
+        tau    (float)          : tax rate on wealth
+        n      (integer)        : growth rate of labour
+        delta  (float)          : depreciation rate on human- and physcial capital
+        A      (integer)        : technology
+    
+    Returns:
+    
+        steady state value for y^*
+        
+    """
+        
+    alpha = alpha
+    phi = phi
+    g = g
+    sk = sk
+    tau = tau
+    phi = phi
+    delta = delta
+    n = n
+    A = A
+    return optimize.bisect(y_ex_ss_func, a, b)
